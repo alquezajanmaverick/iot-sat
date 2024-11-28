@@ -67,6 +67,14 @@
 				</div>
 				<div class="row form-group">
 					<div class="col-sm-4">
+						<label class="control-label modal-label">Guardian's Full name</label>
+					</div>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" name="guardian_name" value="" placeholder="Input guardian's full name" required>
+					</div>
+				</div>
+				<div class="row form-group">
+					<div class="col-sm-4">
 						<label class="control-label modal-label">Guardian's Contact No.</label>
 					</div>
 					<div class="col-sm-8">

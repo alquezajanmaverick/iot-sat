@@ -225,10 +225,18 @@
                 contentType: false,  // Prevent jQuery from setting content-type
                 success: function(response, textStatus, jqXHR){
                     if (jqXHR.status === 200) {
+                        let duplicateEntries = JSON.parse(response).duplicateEntries
+                        let newEntries = JSON.parse(response).newEntries
+                        let successText = ""
+                        if(duplicateEntries > 0){
+                            successText = `${newEntries} new record${newEntries > 1 ? 's':''} imported.</br> ${duplicateEntries} existing record${duplicateEntries > 1 ? 's':''} excluded from import.`
+                        }else{
+                            successText = `${newEntries} new record${newEntries > 1 ? 's':''} imported.`
+                        }
                         Swal.fire({
                             icon: 'success',
-                            title: 'Success!',
-                            text: response, // Display the success response
+                            title: 'Import Success!',
+                            html: successText, // Display the success response
                             confirmButtonText: 'Ok'
                         }).then(() => {
                                 location.reload();

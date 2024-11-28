@@ -14,6 +14,7 @@ if (isset($_POST['student_id']) && is_numeric($_POST['student_id'])) {
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $contact = mysqli_real_escape_string($conn, $_POST['contact']);
     $guardian_contact = mysqli_real_escape_string($conn, $_POST['guardian_contact']);
+    $guardian_name = mysqli_real_escape_string($conn, $_POST['guardian_name']);
     $password = mysqli_real_escape_string($conn, $_POST['password']);
 
     // Update the student's information
@@ -25,7 +26,8 @@ if (isset($_POST['student_id']) && is_numeric($_POST['student_id'])) {
             ext_name='$ext_name',
             email='$email',
             contact='$contact',
-            guardian_contact='$guardian_contact'
+            guardian_contact='$guardian_contact',
+            guardian_name='$guardian_name'
             WHERE student_id='$student_id'";
 
     if (mysqli_query($conn, $sql)) {

@@ -12,13 +12,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $contact = mysqli_real_escape_string($conn, $_POST['contact']);
     $guardian_contact = mysqli_real_escape_string($conn, $_POST['guardian_contact']);
+    $guardian_name = mysqli_real_escape_string($conn, $_POST['guardian_name']);
     // $class_id = mysqli_real_escape_string($conn, $_POST['class_id']);
     $password = mysqli_real_escape_string($conn, $_POST['password']);
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     // SQL query to insert new event
-    $sql = "INSERT INTO student_tbl (uid, first_name, middle_name, last_name, ext_name, email, contact, guardian_contact)
-            VALUES ('$uid', '$first_name', '$mid_name', '$last_name', '$ext_name' , '$email', '$contact', '$guardian_contact')";
+    $sql = "INSERT INTO student_tbl (uid, first_name, middle_name, last_name, ext_name, email, contact, guardian_contact, guardian_name)
+            VALUES ('$uid', '$first_name', '$mid_name', '$last_name', '$ext_name' , '$email', '$contact', '$guardian_contact','$guardian_name')";
 
     // Execute the query
     if (mysqli_query($conn, $sql)) {
