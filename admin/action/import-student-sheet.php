@@ -18,14 +18,15 @@ function addStudent($sheet,$row,$conn){
     $email = mysqli_real_escape_string($conn, $sheet->getCell('F' . $row)->getValue());
     $contact = mysqli_real_escape_string($conn, $sheet->getCell('G' . $row)->getValue());
     $guardian_contact = mysqli_real_escape_string($conn, $sheet->getCell('H' . $row)->getValue());
+    $guardian_name = mysqli_real_escape_string($conn, $sheet->getCell('I' . $row)->getValue());
     $format =strtoupper($sheet->getCell('B' . $row)->getValue() . $sheet->getCell('D' . $row)->getValue());
     $whitespaceRemoved = str_replace(' ', '', $format);
     $password = mysqli_real_escape_string($conn,$whitespaceRemoved);
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     // SQL query to insert new event
-    $sql = "INSERT INTO student_tbl (uid, first_name, middle_name, last_name, ext_name, email, contact, guardian_contact)
-            VALUES ('$uid', '$first_name', '$mid_name', '$last_name', '$ext_name' , '$email', '$contact', '$guardian_contact')";
+    $sql = "INSERT INTO student_tbl (uid, first_name, middle_name, last_name, ext_name, email, contact, guardian_contact,guardian_name)
+            VALUES ('$uid', '$first_name', '$mid_name', '$last_name', '$ext_name' , '$email', '$contact', '$guardian_contact','$guardian_name')";
 
     // Execute the query
     if (mysqli_query($conn, $sql)) {

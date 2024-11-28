@@ -229,9 +229,9 @@
                         let newEntries = JSON.parse(response).newEntries
                         let successText = ""
                         if(duplicateEntries > 0){
-                            successText = `${newEntries} new record${newEntries > 1 ? 's':''} imported.</br> ${duplicateEntries} existing record${duplicateEntries > 1 ? 's':''} excluded from import.`
+                            successText = `${newEntries} new record${newEntries > 1 ? 's':''} imported.</br> ${duplicateEntries} existing record${duplicateEntries > 1 ? 's':''} excluded from import.</br><strong>Note: Records not reflected may be found on archives.<s/trong>`
                         }else{
-                            successText = `${newEntries} new record${newEntries > 1 ? 's':''} imported.`
+                            successText = `${newEntries} new record${newEntries > 1 ? 's':''} imported.</br><strong>Note: Records not reflected may be found on archives.<s/trong>`
                         }
                         Swal.fire({
                             icon: 'success',
