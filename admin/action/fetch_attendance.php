@@ -2,6 +2,7 @@
 require '../../db/dbconn.php';
 
 $last_fetch_id = isset($_GET['last_fetch_id']) ? $_GET['last_fetch_id'] : null;
+$date = isset($_GET['date']) ? $_GET['date'] : null;
 $week = isset($_GET['week']) ? $_GET['week'] : null;
 $month = isset($_GET['month']) ? $_GET['month'] : null;
 $year = isset($_GET['year']) ? $_GET['year'] : null;
@@ -63,8 +64,8 @@ $display_attendance = "
     INNER JOIN student_tbl st ON att.student_id = st.student_id
     INNER JOIN acad_yr_tbl ay ON att.acad_id = ay.acad_id
     WHERE att.attendance_id > '$last_fetch_id'"; 
-// $display_attendance .= $date != null ? " AND DATE(date_time) = '$date'" : "";
-$display_attendance .= $week != null && $month != null && $year != null ? "AND (DATE(date_time) BETWEEN '".$dateRange['start_date']."' AND '".$dateRange['end_date']."')" : "";
+$display_attendance .= $date != null ? " AND DATE(date_time) = '$date'" : "";
+// $display_attendance .= $week != null && $month != null && $year != null ? "AND (DATE(date_time) BETWEEN '".$dateRange['start_date']."' AND '".$dateRange['end_date']."')" : "";
 
 $display_attendance .= " ORDER BY att.attendance_id DESC";
 
@@ -76,4 +77,5 @@ while ($row = mysqli_fetch_assoc($result)) {
 }
 
 echo json_encode($data);
-?>
+
+

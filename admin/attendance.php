@@ -56,7 +56,7 @@
                           </div>
                           <div class="card-content collapse show">
                               <div class="card-body">
-                                <div class="row float-left mb-2">
+                                <!-- <div class="row float-left mb-2">
                                     <div class="col pl-2 pr-0">
                                         <select id="week" style="max-width:8rem;" class="form-control-sm form-select form-select-sm px-2" aria-label="Small select example">
                                             <option selected disabled>WEEK</option>
@@ -92,8 +92,16 @@
                                        <button id="triggerFilter" type="button" class="btn-sm btn-primary">FILTER</button>
                                        <button id="disableTriggerFilter" type="button" class="btn-sm btn-danger" style="margin-left:0.5rem"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 32 32"><path fill="currentColor" d="M22.448 21A10.86 10.86 0 0 0 25 14A10.99 10.99 0 0 0 6 6.466V2H4v8h8V8H7.332a8.977 8.977 0 1 1-2.1 8h-2.04A11.01 11.01 0 0 0 14 25a10.86 10.86 0 0 0 7-2.552L28.586 30L30 28.586Z"/></svg></button>
                                     </div>
+                                </div> -->
+                                  
+                                <div class="float-right mb-2">
+                                    <label for="dtp" class="form-label">Attendance Date:</label>
+                                    <div class="d-flex">
+                                        <input type="text" id="dtp" class="form-control datepicker">
+                                        <button type="button" id="resetFilterbtn" class="btn-sm btn-danger ml-1">RESET</button>
+                                    </div>
                                 </div>
-                                  <div class="table-responsive">
+                                <div class="table-responsive">
                                       <table class="table table-hover display nowrap table-bordered table-striped" id="myTable" width="100%" cellspacing="0">
                                         <thead class="bg-dark text-white">
                                             <tr>
@@ -134,11 +142,14 @@
         var dataTable;
         var filtered = false;
         var baseDate = dayjs().format('YYYY-MM-DD')
+        var container=$('.card-content').length>0 ? $('.card-content').parent() : "body";
 
         let dtpckr =  $(".datepicker").datepicker({
-            format: 'dd/mm/yyyy',
-            todayHighlight:'TRUE',
+            format: 'yyyy-mm-dd',
+            container:container,
+            todayHighlight: true,
             autoclose: true,
+            orientation: 'left'
         });
         dtpckr.on('changeDate', function(e) {
             baseDate = dayjs(e.date).format('YYYY-MM-DD')
@@ -149,7 +160,12 @@
             filtered=false
             fetchData(filtered)
         })
-
+        $('#resetFilterbtn').on('click',function(e){
+            dtpckr.datepicker('setDate',null)
+            filtered = false;
+            fetchData(filtered)
+        })
+        
         $('#triggerFilter').on('click',function(e){
             filtered=true
             fetchData(filtered)
@@ -215,7 +231,7 @@
 
         function fetchData(f = false) {
             $.ajax({
-                url: 'action/fetch_attendance.php'+ (f == true ? `?week=${$('#week').val()}&month=${$('#month').val()}&year=${$('#minmaxyear').val()}` : ''),
+                url: 'action/fetch_attendance.php'+ (f == true ? `?date=${baseDate}` : ''),
                 type: 'GET',
                 // data: {
                 //     last_fetch_id: lastFetchId
@@ -224,8 +240,8 @@
                 success: function (response) {
                     if (response.length > 0) {
                         lastFetchId = response[0].attendance_id;
-                        renderTable(response);
                     }
+                        renderTable(response);
                 },
                 complete: function () {
                     //setTimeout(fetchData(filtered), 300); // Fetch data every 3 seconds ---- 
@@ -238,11 +254,12 @@
         }
 
         function renderTable(data) {
+            console.log(data)
             if (!dataTableInitialized) {
                 initializeDataTable();
                 dataTableInitialized = true;
             }
-            dataTable.clear()
+            dataTable.rows().clear().draw()
 
             // Loop through the data and add rows to the table
             for (var i = 0; i < data.length; i++) {
