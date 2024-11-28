@@ -93,6 +93,7 @@
                                                   $email = $row['email'];
                                                   $contact = $row['contact'];
                                                   $guardian_contact = $row['guardian_contact'];
+                                                  $guardian_name = $row['guardian_name'];
                                             ?>
                                             <tr>
                                               <td class=""><?php echo $num; ?></td>          
