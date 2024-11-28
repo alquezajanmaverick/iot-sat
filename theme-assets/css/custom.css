@@ -1,0 +1,23 @@
+.input-error {
+    border: 1px solid red !important;
+}
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 999;
+    height: 6%;
+}
+.main-menu{
+    z-index: 999;
+}
+.modal-backdrop {
+    z-index: 99999; /* Make sure this value is higher than the z-index of the main-menu */
+}
+.modal{
+    z-index: 999999;
+}
+.swal2-backdrop-show{
+    z-index: 9999999;
+}
